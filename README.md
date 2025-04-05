@@ -1,5 +1,5 @@
 # Segmentação de clientes de um supermercado/*Customer Segmentation for a Supermarket
-![segmentacao_pca_3d](imagens/pca_plot_3d.png)
+![Segmentação](relatorios/imagens/pca_plot_3d.png)
 
 
 
@@ -48,7 +48,7 @@ Identify customer groups with similar traits to help the supermarket with:
 - **Improved customer experience**  
 
 ---
-![clusters](imagens/clusters.png)
+![clusters](relatorios/imagens/clusters.png)
 ## Detalhes do dataset utilizado e resumo dos resultados
 
 🔍 Análise Exploratória (EDA)
@@ -81,7 +81,7 @@ Moderados | Moderado | Alta | 4
 📊 Visualização 3D com PCA
 Para melhor visualização, reduzi a dimensionalidade usando PCA (3 componentes).
 
-![boxplot](imagens/boxplot.png)
+![Segmentação](relatorios/imagens/boxplot.png)
 
 📌 Conclusões
 
@@ -141,7 +141,7 @@ Combinar as análises dos 3 notebooks permite criar personas de clientes e desen
 Link original para o dataset: https://www.kaggle.com/vjchoudhary7/customer-segmentation-tutorial-in-python
 [Link original para o dataset](https://www.kaggle.com/vjchoudhary7/customer-segmentation-tutorial-in-python)
 
-![pairplot](imagens/pairplot.png)
+![pairplot](relatorios/imagens/pairplot.png)
 EN
 
  ## **🔍 Exploratory Data Analysis (EDA)**  
