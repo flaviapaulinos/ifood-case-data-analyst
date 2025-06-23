@@ -257,7 +257,7 @@ Consider a well-established company operating in the food retail sector. Current
 
 Globally, the company has had solid revenue and a healthy bottom line over the past three years, but profit growth prospects for the next three years are not promising. For this reason, several strategic initiatives are being considered to reverse this trend. One of them is improving the performance of marketing activities, with a special focus on marketing campaigns.
 
-Pairplot
+
 This is a case study project based on the selection process for the iFood Data Analyst position, available in this repository.
 
 Full case description [here].
