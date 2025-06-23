@@ -56,7 +56,7 @@ Análise por cluster:
   - pode aceitar campanhas
   - mais pessoas com idade intermediária/elevada
 
-
+![clusters](reports/images/clusters_features.png)
 Posteriormente, seis modelos de classificação com diferentes abordagens e complexidades foram treinados para comparar desempenho e entender o comportamento em relação a classificação dos clientes.  A ideia é avaliar desde modelos base simples até modelos avançados com capacidade de ajuste fino e desempenho elevado em bases reais.
 
 1. LogisticRegression – Modelo Linear Interpretable 
