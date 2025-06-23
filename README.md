@@ -135,8 +135,38 @@ Posteriormente, seis modelos de classificação com diferentes abordagens e comp
      
 Um DummyClassifier foi utilizado como baseline. 
 
-## Conclusão
+## Conclusões
 
+### 📊 Insights Estratégicos com Base na Segmentação de Clientes
+A combinação da análise exploratória com a segmentação por clusters revela três perfis distintos de clientes, permitindo à empresa adotar estratégias de marketing mais direcionadas e eficientes.
+
+🧩 Cluster 0 – Clientes com Menor Potencial de Consumo
+Este grupo é formado por clientes com menor renda, baixo nível de gastos e maior presença de filhos jovens. É o único segmento com participação significativa de pessoas com formação básica e concentra clientes mais jovens. Eles demonstram baixa propensão a responder às campanhas promocionais.
+
+🔹 Oportunidade: Estratégias de fidelização de longo prazo, ofertas mais acessíveis e campanhas educativas podem ser eficazes aqui, além de ações que incentivem o primeiro engajamento com a marca.
+
+💎 Cluster 1 – Clientes com Maior Potencial de Valor
+Clientes desse grupo apresentam alta renda, maior volume de gastos, e raramente têm filhos. São os mais propensos a aceitar campanhas, com maior concentração de pessoas com nível educacional mais elevado e em faixa etária mais madura.
+
+🔹 Oportunidade: Esse segmento é ideal para ofertas premium, programas de fidelidade e campanhas personalizadas. Representa um público estratégico, com grande potencial de conversão e geração de receita.
+
+⚖️ Cluster 2 – Clientes com Potencial Moderado
+O terceiro grupo apresenta renda e gastos intermediários, e maior presença de filhos adolescentes. A aceitação de campanhas é possível, ainda que não tão expressiva quanto no Cluster 1. Também é formado por clientes com idade intermediária ou elevada.
+
+🔹 Oportunidade: Estratégias híbridas podem ser adotadas, com foco em identificar gatilhos de engajamento que aumentem o envolvimento desse grupo com as campanhas. Incentivos moderados e segmentação por ciclo de vida familiar podem ser úteis.
+
+🎯 Direcionamento Estratégico
+Essa segmentação permite que a empresa:
+
+Personalize campanhas conforme o perfil do cliente.
+
+Otimize o uso de recursos, focando esforços nos públicos com maior retorno esperado.
+
+Aumente a conversão e fidelização, criando ações adequadas à realidade e ao comportamento de cada grupo.
+
+Essa abordagem orientada por dados permite entender melhor o público, falar a língua de cada perfil e entregar mais valor ao cliente — transformando dados em decisões mais inteligentes para o negócio.
+
+### Classificação
 - Modelos lineares como Regressão Logística tiveram ótimo desempenho, mesmo em comparação com modelos de árvore.
 - O uso de `average_precision` como métrica principal foi essencial para melhor interpretação do desempenho em uma base desbalanceada.
 
