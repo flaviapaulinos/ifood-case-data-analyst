@@ -2,15 +2,11 @@
 
 Considere uma empresa bem estabelecida que atua no setor de varejo de alimentos. Atualmente, eles têm cerca de vários milhares de clientes registrados e atendem quase um milhão de consumidores por ano. Eles vendem produtos de 5 grandes categorias: vinhos, carnes, frutas exóticas, peixes especialmente preparados e produtos doces. Estes podem ser divididos ainda mais em produtos de *gold* e regulares. Os clientes podem encomendar e adquirir produtos por meio de 3 canais de vendas: lojas físicas, catálogos e site da empresa. Globalmente, a empresa teve receitas sólidas e uma linha de fundo saudável nos últimos 3 anos, mas as perspectivas de crescimento dos lucros para os próximos 3 anos não são promissoras... Por esse motivo, várias iniciativas estratégicas estão sendo consideradas para inverter essa situação. Um deles é melhorar o desempenho das atividades de marketing, com foco especial em campanhas de marketing.
 
-![pairplot](images/clusters.png)
+![pairplot](reports/images/clusters.png)
 
 Projeto estudo de caso baseado no processo seletivo para Analista de Dados do iFood disponível [neste repositório](https://github.com/ifood/ifood-data-business-analyst-test).
 
-Descrição completa do case [aqui](case/README.md).
-
-<p align="center"> 
-  <a href="https://www.linkedin.com/in/flsbustamante" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a> 
-</p>
+Descrição completa do case [aqui](related/ifood_crm_data_analyst_case.md).
 
 ## Objetivos
 
@@ -24,11 +20,12 @@ Através do estudo de caso do processo seletivo do Ifood foi  possível:
 
 ## Detalhes do dataset utilizado e resumo dos resultados
 
-Uma descrição detalhada do dataset utilizado está disponível [aqui](data/README.md).
+Um dicionário de dados está disponível: [aqui](related/dicionario_dados.md).
+Descrição completa [aqui](related/ifood_crm_data_analyst_case.md).
 
 Com um pipeline com pré-processamento, PCA e K-Means, a base foi segmentada em 3 clusters:
 
-![clusters](images/pca.png)
+![clusters](reports/images/pca.png)
 
 Análise por cluster:
 
@@ -143,7 +140,7 @@ Um DummyClassifier foi utilizado como baseline.
 - Modelos lineares como Regressão Logística tiveram ótimo desempenho, mesmo em comparação com modelos de árvore.
 - O uso de `average_precision` como métrica principal foi essencial para melhor interpretação do desempenho em uma base desbalanceada.
 
-![comparing_models](images/comparing_models.png)
+![comparing_models](reports/images/comparing_models.png)
 
 Com base nessa comparação, o modelo de Regressão Logística foi escolhido para passar por uma otimização de hiperparâmetros. 
 
