@@ -1,22 +1,22 @@
 from pathlib import Path
-PASTA_PROJETO = Path(__file__).resolve().parents[2]
-PASTA_RELATORIOS = PASTA_PROJETO / "relatorios"
+PROJECT_FOLDER = Path(__file__).resolve().parents[2]
+REPORTS_FOLDER = PROJECT_FOLDER  / "reports"
 
-PASTA_DADOS = PASTA_PROJETO / "dados"
-PASTA_IMAGENS = PASTA_RELATORIOS / "imagens"
-PASTA_MODELOS = PASTA_PROJETO / "modelos"
+DATA_FOLDER = PROJECT_FOLDER / "data"
+IMAGES_FOLDER = REPORTS_FOLDER / "images"
+MODELS_FOLDER = PROJECT_FOLDER / "models"
 
 
-DADOS_ORIGINAIS = PASTA_DADOS / "Mall_Customers.csv"
-DADOS_LIMPOS = PASTA_DADOS / "Mall_Customers-clean.parquet"
-DADOS_SCALED = PASTA_DADOS / "Mall_Customers-scaled.parquet"
-DADOS_CLUSTERED = PASTA_DADOS /  "Mall_Customers-clustered.parquet"
-DADOS_PCA_SCALED = PASTA_DADOS /  "Mall_Customers-pca.parquet"
+ORIGINAL_DATA = DATA_FOLDER / "ml_project1_data.csv"
+SCALED_DATA = DATA_FOLDER / "ml_project1_data_scaled.parquet"
+TREATED_DATA = DATA_FOLDER / "ml_project1_data_treated.parquet"
+CLUSTERED_DATA = DATA_FOLDER /  "ml_project1_data_clustered.parquet"
+DADOS_PCA_SCALED = DATA_FOLDER /  "ml_project1_data_pca.parquet"
 
-RELATORIO = PASTA_RELATORIOS / "00-fbps-eda.html"
-MODELO = PASTA_MODELOS / "modelo_clustering.pkl"
-MODELO_PCA = PASTA_MODELOS / "modelo_pca_clustering.pkl"
-
+REPORT = REPORTS_FOLDER / "00-fbps-eda.html"
+MODEL_CLUSTERING = MODELS_FOLDER / "modelo_clustering.pkl"
+PCA_MODEL = MODELS_FOLDER / "modelo_pca_clustering.pkl"
+CLASSIFICATION_MODEL = MODELS_FOLDER / "modelo_class.pkl"
 
 
 

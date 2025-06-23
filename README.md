@@ -1,244 +1,177 @@
-# Segmentação de clientes de um supermercado/*Customer Segmentation for a Supermarket
-![Segmentação](relatorios/imagens/pca_plot_3d.png)
+# Case iFood - Analista de dados
 
+Considere uma empresa bem estabelecida que atua no setor de varejo de alimentos. Atualmente, eles têm cerca de vários milhares de clientes registrados e atendem quase um milhão de consumidores por ano. Eles vendem produtos de 5 grandes categorias: vinhos, carnes, frutas exóticas, peixes especialmente preparados e produtos doces. Estes podem ser divididos ainda mais em produtos de *gold* e regulares. Os clientes podem encomendar e adquirir produtos por meio de 3 canais de vendas: lojas físicas, catálogos e site da empresa. Globalmente, a empresa teve receitas sólidas e uma linha de fundo saudável nos últimos 3 anos, mas as perspectivas de crescimento dos lucros para os próximos 3 anos não são promissoras... Por esse motivo, várias iniciativas estratégicas estão sendo consideradas para inverter essa situação. Um deles é melhorar o desempenho das atividades de marketing, com foco especial em campanhas de marketing.
 
+![pairplot](images/clusters.png)
 
-PT
+Projeto estudo de caso baseado no processo seletivo para Analista de Dados do iFood disponível [neste repositório](https://github.com/ifood/ifood-data-business-analyst-test).
 
-📌 Visão Geral
-A segmentação de clientes com base em parâmetros pré-definidos como gastos com compras, renda anual, idade, sexo ajudam na formulação de estratégias de acordo com o perfil desses clientes. 
+Descrição completa do case [aqui](case/README.md).
 
-Este projeto tem como objetivo segmentar esses clientes de acordo com os parâmetros fornecidos no dataset, usando kmeans, as bibibliotecas scikitlearn, matplotlib, pandas, técnicas de aprendizado não supervisionado de clusterização e  redução de diemnsionalidade
+<p align="center"> 
+  <a href="https://www.linkedin.com/in/flsbustamante" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a> 
+</p>
 
-O conjunto de dados contém:
-✅ Idade
-✅ Gênero
-✅ Renda Anual (k$)
-✅ Pontuação de Gastos (1-100) (métrica definida pelo supermercado com base no comportamento de compra)
+## Objetivos
 
-🎯 Objetivo
-Identificar grupos de clientes com características semelhantes para auxiliar o supermercado em:
+Através do estudo de caso do processo seletivo do Ifood foi  possível:
+- Construir uma análise exploratória robusta.
+- Segmentar os clientes da base de dados fornecida.
+- Construir um modelo de classificação para prever se um cliente irá comprar o produto oferecido na campanha.
+- Apresentar uma estrutura de projeto de Ciência de Dados, com a utilização de notebooks, scripts, relatórios e repositório no GitHub.
+- Apresentar boas práticas de programação em Python, como a utilização de funções e arquivos de script para facilitar o reaproveitamento de código.
+- Mostrar boas práticas de uso do SciKit-Learn, como a utilização de pipelines e otimização de hiperparâmetros.
 
-Estratégias de marketing personalizadas
-
-Ofertas direcionadas
-
-Melhorias na experiência do cliente
-
-
-EN
-
-## **📌 Overview**  
-This project aims to segment supermarket customers based on demographic and behavioral data using **unsupervised machine learning (K-Means Clustering)**.  
-
-The dataset includes:  
-✅ **Age**  
-✅ **Gender**  
-✅ **Annual Income (k$)**  
-✅ **Spending Score (1-100)** *(a metric defined by the supermarket based on shopping behavior)*  
-
-🔗 **Original Dataset:** [Mall Customer Segmentation Data | Kaggle](https://www.kaggle.com/vjchoudhary7/customer-segmentation-tutorial-in-python)  
-
----
-
-## **🎯 Goal**  
-Identify customer groups with similar traits to help the supermarket with:  
-- **Personalized marketing strategies**  
-- **Targeted promotions**  
-- **Improved customer experience**  
-
----
-![clusters](relatorios/imagens/clusters.png)
 ## Detalhes do dataset utilizado e resumo dos resultados
 
-🔍 Análise Exploratória (EDA)
-Foram realizadas análises estatísticas e visualizações para entender a distribuição dos dados
+Uma descrição detalhada do dataset utilizado está disponível [aqui](data/README.md).
 
-📊 Visualizações Principais
-Pairplot, histogramas, boxplots, matriz de correlação
+Com um pipeline com pré-processamento, PCA e K-Means, a base foi segmentada em 3 clusters:
 
+![clusters](images/pca.png)
 
-⚙️ Pré-processamento
-Foram aplicadas as seguintes transformações:
+Análise por cluster:
 
-One-Hot Encoding para a variável categórica (Gender).
+- Cluster 0:
 
-PowerTransformer para normalizar as variáveis numéricas (Age, Annual Income, Spending Score).
+  - Menor renda  
+  - menor gasto 
+  - maior probabilidade de ter filhos (jovens)
+  - baixa propensão a aceitar campanhas
+  - único cluster com porcentagem significativa de pessoas com escolaridade básica
+  - grupo com pessoas mais jovens
+  
 
+- Cluster 1: 
+ 
+  - Renda alta 
+  - gasto alto 
+  - menor probabilidade de ter filhos
+  - mais propenso a aceitar campanhas
+  - cluster sem pessoas com escolaridade básica
+  - mais pessoas com idade intermediária/elevada
+  
 
-🤖 Modelagem (K-Means Clustering)
+- Cluster 2: 
+  - Renda intermediária
+  - gasto intermediário
+  - maior probabilidade de ter filhos (adolescentes)
+  - pode aceitar campanhas
+  - mais pessoas com idade intermediária/elevada
 
-📌 Segmentação dos Clientes
-Pontuação de gastos | Renda | Idade | Número Cluster
---- | --- | --- | ---
-Altos | Moderada | Jovens | 0
-Baixos | Baixo | Moderada | 1
-Altos | Alta | Jovens Adultos | 2
-Baixos | Alta | Moderada | 3
-Moderados | Moderado | Alta | 4
 
+Posteriormente, seis modelos de classificação com diferentes abordagens e complexidades foram treinados para comparar desempenho e entender o comportamento em relação a classificação dos clientes.  A ideia é avaliar desde modelos base simples até modelos avançados com capacidade de ajuste fino e desempenho elevado em bases reais.
 
-📊 Visualização 3D com PCA
-Para melhor visualização, reduzi a dimensionalidade usando PCA (3 componentes).
+1. LogisticRegression – Modelo Linear Interpretable 
 
-![Segmentação](relatorios/imagens/boxplot.png)
+    * É simples, eficiente e rápido, especialmente em datasets com número razoável de features.
 
-📌 Conclusões
+    * Interpretação direta dos coeficientes ajuda na explicação do modelo.
 
-O EDA revelou padrões fundamentais sobre o comportamento dos clientes:
+    * Funciona bem quando a relação entre as variáveis é aproximadamente linear.
 
-Distribuições:
+    * Ponto de atenção: Pode não capturar relações não lineares nos dados.
 
-A base é equilibrada em gênero (56% mulheres, 44% homens).
+2. SGDClassifier – Gradiente Estocástico (versátil e eficiente)
 
-Spending Score e Annual Income têm distribuições amplas, ideais para segmentação.
+    * Muito eficiente em grandes volumes de dados.
 
-Correlação negativa entre Age e Spending Score (-0.34): clientes mais jovens tendem a gastar mais.
+    * Permite usar diferentes funções de perda (log loss, hinge, etc.).
 
-Segmentação Inicial:
+    * Suporta regularizações L1, L2 e ElasticNet.
 
-O pairplot mostrou potencial para agrupamentos naturais, especialmente nas relações entre renda e gastos.
+    * Ponto de atenção: Sensível a hiperparâmetros como taxa de aprendizado e número de iterações.
 
-Boxplots por gênero indicaram que homens jovens têm maior dispersão nos gastos.
+3. KNeighborsClassifier – Baseado em Instância
 
+    * Simples e intuitivo.
 
-O modelo identificou 5 clusters com perfis distintos:
+    * Não faz suposições sobre a distribuição dos dados.
 
-Cluster 2 (19.5%): Alto potencial (alta renda + alto gasto) → Priorizar campanhas premium.
+    * Bom para conjuntos pequenos e quando a distância entre exemplos tem significado.
 
-Cluster 4 (26.5%): Renda e gastos moderados + idade alta → Oferecer produtos de valor intermediário.
+    * Ponto de atenção:
+  
+        * Custo computacional alto em datasets grandes.
 
-Cluster 1 (10%): Baixa renda e gastos → Evitar investimentos pesados.
+        * Muito sensível à escolha de K e ao escalonamento das variáveis.
 
-Validação:
+4. SVC – Máquinas de Vetores de Suporte (SVM)
 
-Silhouette score e método elbow confirmaram que 5 clusters equilibram granularidade e interpretabilidade.
+    * Robusto para margens pequenas entre classes.
 
-Diferenças por gênero foram observadas (ex.: Cluster 0 com 60% mulheres).
+    * Funciona bem com kernel trick para problemas não lineares.
 
-Aplicação:
+    * Bom desempenho em problemas complexos de classificação com feature space de alta dimensão.
 
-Essa segmentação permite personalizar estratégias de marketing e otimizar alocação de recursos.
+    * Ponto de atenção:
 
+        * Custo computacional alto em datasets grandes.
 
+        * Pode exigir ajuste fino de C e kernel.
 
-A redução de dimensionalidade com PCA permitiu:
+5. XGBoost – Boosting Avançado e Otimizado
 
-Visualização eficiente: Os 3 componentes principais capturaram a essência dos dados (sugerido pela variância explicada).
+    * Altamente eficaz em problemas reais com dados tabulares.
 
-Confirmação dos clusters: A projeção 3D mostrou grupos bem separados, validando a escolha de 5 clusters.
+    * Suporta customização, regularização e lida bem com valores ausentes.
 
+    * Excelente desempenho em dados desbalanceados, especialmente com o parâmetro scale_pos_weight.
 
-Vantagens:
+    * Ponto de atenção: Mais complexo para ajustar e interpretar.
 
-A técnica simplificou a comunicação dos resultados para stakeholders não técnicos.
+6. LightGBM – Boosting com Foco em Performance
 
-Facilitou a identificação de outliers e sobreposições entre clusters.
+    * Semelhante ao XGBoost, mas mais rápido, usando histogramas e crescimento leaf-wise.
 
-Recomendação final:
-Combinar as análises dos 3 notebooks permite criar personas de clientes e desenvolver estratégias baseadas em dados concretos.
+    * Muito rápido e eficiente em datasets grandes.
 
-Link original para o dataset: https://www.kaggle.com/vjchoudhary7/customer-segmentation-tutorial-in-python
-[Link original para o dataset](https://www.kaggle.com/vjchoudhary7/customer-segmentation-tutorial-in-python)
+    * Lida bem com features categóricas e dados desbalanceados.
 
-![pairplot](relatorios/imagens/pairplot.png)
-EN
+    * Suporte nativo a scale_pos_weight e early stopping.
 
- ## **🔍 Exploratory Data Analysis (EDA)**  
-Statistical and visual analyses were performed to understand data distribution:  
+    * Ponto de atenção:
 
-### **📊 Key Visualizations**  
-1. **Pairplot (Variable Relationships)**  
+        * Pode overfitar se não for cuidadosamente ajustado.
 
-   sns.pairplot(df_analise, diag_kind='kde', hue='Gender')
-Histograms & Boxplots
+        * Requer tratamento especial em datasets muito pequenos.
+     
+Um DummyClassifier foi utilizado como baseline. 
 
+## Conclusão
 
-⚙️ Preprocessing
-Applied transformations:
+- Modelos lineares como Regressão Logística tiveram ótimo desempenho, mesmo em comparação com modelos de árvore.
+- O uso de `average_precision` como métrica principal foi essencial para melhor interpretação do desempenho em uma base desbalanceada.
 
-One-Hot Encoding for categorical data (Gender).
+![comparing_models](images/comparing_models.png)
 
-PowerTransformer for numerical features (Age, Income, Spending Score).
+Com base nessa comparação, o modelo de Regressão Logística foi escolhido para passar por uma otimização de hiperparâmetros. 
 
+## Organização do projeto
 
-🤖 Modeling (K-Means Clustering)
-Pipeline
+```
 
-📌 Customer Segments
-Cluster	Spending Score	Income	Age
-0	High	Low	Young
-1	Low	Low	Middle-aged
-2	High	High	Young Adults
-3	Low	High	Middle-aged
-4	Moderate	Moderate	Elderly
-
-📊 3D Visualization (PCA)
-Reduced dimensionality using PCA (3 components):
-
-📌 Conclusions
-The EDA revealed key patterns in customer behavior:
-
-Distributions:
-
-The base is balanced in gender (56% women, 44% men).
-
-Spending Score and Annual Income have wide distributions, ideal for segmentation.
-
-Negative correlation between Age and Spending Score (-0.34): younger customers tend to spend more.
-
-Initial Segmentation:
-
-The pairplot showed potential for natural groupings, especially in the relationships between income and spending.
-
-Boxplots by gender indicated that young men have greater dispersion in spending.
-
-The model identified 5 clusters with distinct profiles:
-
-Cluster 2 (19.5%): High potential (high income + high spending) → Prioritize premium campaigns.
-
-Cluster 4 (26.5%): Moderate income and spending + high age → Offer intermediate value products.
-
-Cluster 1 (10%): Low income and expenses → Avoid heavy investments.
-
-Validation:
-
-Silhouette score and elbow method confirmed that 5 clusters balance granularity and interpretability.
-
-Differences by gender were observed (e.g.: Cluster 0 with 60% women).
-
-Application:
-
-This segmentation allows to customize marketing strategies and optimize resource allocation.
-
-Dimensionality reduction with PCA allowed:
-
-Efficient visualization: The 3 principal components captured the essence of the data (suggested by the explained variance).
-
-Confirmation of clusters: The 3D projection showed well-separated groups, validating the choice of 5 clusters.
-
-Advantages:
-
-The technique simplified the communication of results to non-technical stakeholders.
-
-It facilitated the identification of outliers and overlaps between clusters.
-
-Final recommendation:
-Combining the analyses from the 3 notebooks allows you to create customer personas and develop strategies based on concrete data.
-
-
-Versões das bibliotecas:
-
--------------------- | ----------
-     Biblioteca      |   Versão  
--------------------- | ----------
-Matplotlib           |      3.9.2
-NumPy                |     1.26.4
-Pandas               |      2.2.3
-Scikit-Learn         |      1.5.1
-Seaborn              |     0.13.2
-
-Versão do Python: 3.12.3
+├── data                <- Arquivos de dados para o projeto.
+├── models              <- Modelos gerados para o projeto.
+|
+├── notebooks           <- Cadernos Jupyter. 
+│
+|   └──src              <- Código-fonte para uso neste projeto.
+|      │
+|      ├── __init__.py  <- Torna um módulo Python
+|      ├── helpers.py   <- Funções auxiliares do projeto
+|      ├── config.py    <- Configurações básicas do projeto
+|      ├── graphics.py  <- Scripts para criar visualizações exploratórias e orientadas a resultados
+|      └── models.py    <- Funções utilizadas no modelo
+|
+├── related            <- Dicionários de dados/ iFood Data Analyst Case.
+├── reports            <- Relatório gerado durante o projeto utilizando a biblioteca [ydata-profiling]
+│   └── images        <- Gráficos e figuras gerados para serem usados em relatórios
+├── environment.yml       <- O arquivo de requisitos para reproduzir o ambiente de análise
+├── LICENSE            <- Licença de código aberto se uma for escolhida
+├── README.md          <- README principal para desenvolvedores que usam este projeto.
+|
+```
 
 ## Configuração do ambiente
 
@@ -263,3 +196,20 @@ Versão do Python: 3.12.3
 
 
 Para mais informações sobre como usar Git e GitHub, [clique aqui](https://cienciaprogramada.com.br/2021/09/guia-definitivo-git-github/). Sobre ambientes virtuais, [clique aqui](https://cienciaprogramada.com.br/2020/08/ambiente-virtual-projeto-python/).
+
+
+
+## Como reproduzir o projeto
+
+O projeto foi desenvolvido utilizando o Python 3.11.5. Para reproduzir o projeto, crie um ambiente virtual com o Conda, ou ferramenta similar, com o Python 3.11.5 e instale as bibliotecas abaixo:
+
+| Biblioteca       | Versão |
+| ---------------- | ------ |
+| Imbalanced-Learn | 0.11.0 |
+| Matplotlib       | 3.7.2  |
+| NumPy            | 1.24.3 |
+| Pandas           | 1.5.3  |
+| Scikit-Learn     | 1.3.0  |
+| Seaborn          | 0.12.2 |
+
+Essas são as bibliotecas principais utilizadas no projeto. O relatório foi gerado com a biblioteca [ydata-profiling](https://github.com/ydataai/ydata-profiling), instale-a se quiser reproduzir o relatório. 

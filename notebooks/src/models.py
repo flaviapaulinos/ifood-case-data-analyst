@@ -1,37 +1,80 @@
 import pandas as pd
+import seaborn as sns
+#from sklearn.pipeline import Pipeline
 
 from imblearn.pipeline import Pipeline
-
+from imblearn.under_sampling import RandomUnderSampler
+from sklearn.feature_selection import SelectKBest, f_classif
 from sklearn.model_selection import KFold, cross_validate, GridSearchCV
 from sklearn.metrics import fbeta_score, make_scorer
 
 RANDOM_STATE = 42
 
-def construir_pipeline_modelo_classificacao(classificador, preprocessor=None):
+def build_classification_model_pipeline(
+    classifier,
+    preprocessor=None,
+    feature_selector=None,
+    sampler=None
+):
+    """
+    Builds a classification pipeline, optionally including a preprocessor and feature selector.
+
+    Args:
+        classifier: A classification estimator.
+        preprocessor: Optional preprocessing pipeline.
+        feature_selector: Optional feature selector (e.g., SelectFromModel, RFE, etc.).
+        sampler:  Optional sampling
+
+    Returns:
+        model: Pipeline.
+    """
+    steps = []
+
     if preprocessor is not None:
-        pipeline = Pipeline(steps=preprocessor.steps + [("clf", classificador)])
-    else:
-        pipeline = Pipeline([("clf", classificador)])
+        steps.append(("preprocessor", preprocessor))
+    
+    if feature_selector is not None:
+        steps.append(("feature_selector", feature_selector))
 
-    model = pipeline
+    if sampler is not None:
+        steps.append(("sampler", sampler))
+    
+    steps.append(("clf", classifier))
 
-    return model
-
-def treinar_e_validar_modelo_classificacao(
+    pipeline = Pipeline(steps)
+    return pipeline
+    
+# Filtro para evitar combinações inválidas (depois do GridSearch)
+def is_valid_combination(params):
+    solver = params['model__solver']
+    penalty = params['model__penalty']
+    
+    valid = {
+        'liblinear': ['l1', 'l2'],
+        'lbfgs': ['l2', 'none'],
+        'saga': ['l1', 'l2', 'elasticnet', 'none'],
+    }
+    
+    return penalty in valid.get(solver, [])
+    
+def train_and_validate_classification_model(
     X,
     y,
     cv,
-    classificador,
+    classifier,
     preprocessor=None,
+    feature_selector=None,
+    sampler=None,
     multi_class=False,
-    beta=2  # Parâmetro beta para o fbeta_score
+    beta=2
 ):
-    model = construir_pipeline_modelo_classificacao(
-        classificador,
-        preprocessor,
+    model = build_classification_model_pipeline(
+        classifier=classifier,
+        preprocessor=preprocessor,
+        feature_selector=feature_selector,
+        sampler=sampler
     )
 
-    # Definindo as métricas como um dicionário
     scoring = {
         "accuracy": "accuracy",
         "balanced_accuracy": "balanced_accuracy",
@@ -48,28 +91,43 @@ def treinar_e_validar_modelo_classificacao(
         X,
         y,
         cv=cv,
-        scoring=scoring,  # Passando o dicionário de métricas
+        scoring=scoring,
     )
 
     return scores
 
-
-def grid_search_cv_classificador(
-    classificador,
+def grid_search_cv_classifier(
+    classifier,
     param_grid,
     cv,
     preprocessor=None,
     return_train_score=False,
     refit_metric="roc_auc",
     multi_class=False,
-    beta=2  # Parâmetro beta para o fbeta_score
+    beta=2  # Beta parameter for fbeta_score
 ):
-    model = construir_pipeline_modelo_classificacao(classificador, preprocessor)
+    """
+    Performs grid search (GridSearchCV) to optimize classifier hyperparameters.
 
-    # Criando o scorer para fbeta_score
+    Args:
+        classifier: A classification estimator.
+        param_grid: Dictionary of hyperparameters to search.
+        cv: Cross-validation strategy.
+        preprocessor: Optional preprocessing pipeline.
+        return_train_score: If True, includes training scores in the results. Default is False.
+        refit_metric: Metric used to refit the best model. Default is "roc_auc".
+        multi_class: Whether the task is multi-class. Default is False.
+        beta: Beta value for the fbeta_score. Default is 2.
+
+    Returns:
+        grid_search: Fitted `GridSearchCV` object.
+    """
+    model = build_classification_model_pipeline(classifier, preprocessor)
+
+    # Create the scorer for fbeta_score
     fbeta_scorer = make_scorer(fbeta_score, beta=beta, average='weighted' if multi_class else 'binary')
 
-     # Definindo as métricas como um dicionário
+    # Define scoring metrics
     scoring = {
         "accuracy": "accuracy",
         "balanced_accuracy": "balanced_accuracy",
@@ -78,8 +136,9 @@ def grid_search_cv_classificador(
         "recall": "recall_weighted" if multi_class else "recall",
         "roc_auc": "roc_auc_ovr" if multi_class else "roc_auc",
         "average_precision": "average_precision",
-        "f2_score": make_scorer(fbeta_score, beta=beta, average='weighted' if multi_class else 'binary')
+        "f2_score": fbeta_scorer
     }
+
     grid_search = GridSearchCV(
         model,
         cv=cv,
@@ -90,28 +149,38 @@ def grid_search_cv_classificador(
         return_train_score=return_train_score,
         verbose=1,
     )
-       
 
     return grid_search
 
-def organiza_resultados(resultados):
+def organize_cv_results(results):
+    """
+    Organizes cross-validation results into a formatted DataFrame.
 
-    for chave, valor in resultados.items():
-        resultados[chave]["time_seconds"] = (
-            resultados[chave]["fit_time"] + resultados[chave]["score_time"]
+    Adds total execution time (fit + score) and transforms the dictionary of results
+    into an expanded DataFrame with one row per fold.
+
+    Args:
+        results: Dictionary containing results from cross_validate or GridSearch.
+
+    Returns:
+        expanded_results_df: DataFrame with organized and expanded results by fold.
+    """
+    for key, value in results.items():
+        results[key]["time_seconds"] = (
+            results[key]["fit_time"] + results[key]["score_time"]
         )
 
-    df_resultados = (
-        pd.DataFrame(resultados).T.reset_index().rename(columns={"index": "model"})
+    results_df = (
+        pd.DataFrame(results).T.reset_index().rename(columns={"index": "model"})
     )
 
-    df_resultados_expandido = df_resultados.explode(
-        df_resultados.columns[1:].to_list()
+    expanded_results_df = results_df.explode(
+        results_df.columns[1:].to_list()
     ).reset_index(drop=True)
 
     try:
-        df_resultados_expandido = df_resultados_expandido.apply(pd.to_numeric)
+        expanded_results_df = expanded_results_df.apply(pd.to_numeric)
     except ValueError:
         pass
 
-    return df_resultados_expandido
+    return expanded_results_df
